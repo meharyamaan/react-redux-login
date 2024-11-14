@@ -39,7 +39,9 @@ exports.signup = async (req, res) => {
 //VerifyOTP APi
 exports.verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
-
+  if (!email || !otp) {
+    return res.status(201).json({ message: "Missing OTP or Email" });
+  }
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
