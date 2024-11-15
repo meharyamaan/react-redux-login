@@ -68,6 +68,9 @@ exports.signin = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid Credentials" });
 
+    if (!user.isVerified)
+      return res.status(400).json({ message: "User is not verified" });
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });

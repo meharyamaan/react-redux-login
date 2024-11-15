@@ -13,12 +13,13 @@ exports.forgotPassword = async (req, res) => {
     if (!user) return res.status(400).json({ message: "User not Exists" });
 
     const otp = Math.floor(100000 + Math.random() * 900000);
+    user.isVerified = false;
     user.otp = otp;
     user.otpExpires = Date.now() + 3600000;
     await user.save();
 
     await sendOtpEmail(email, otp);
-    res.status(200).json({ message: "OTP sent to email" });
+    res.status(200).json({ message: "New OTP sent to your email" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -42,7 +43,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     user.password = await bcrypt.hash(newPassword, 10);
-
+    user.isVerified = true;
     user.otp = null;
     user.otpExpires = null;
 
