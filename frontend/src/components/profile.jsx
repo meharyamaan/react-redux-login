@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/auth/authSlice";
 import BG from "../images/BG.png";
 import User from "../images/user.png";
+import { persistor } from "../redux/store";
 const Profile = () => {
   const { name } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Profile = () => {
   const handleSignOut = () => {
     dispatch(logout());
     localStorage.removeItem("token");
+    persistor.purge();
     navigate("/signin");
   };
   return (

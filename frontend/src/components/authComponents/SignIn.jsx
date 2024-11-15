@@ -45,6 +45,7 @@ const SignIn = () => {
       const { name, token } = response.data;
 
       localStorage.setItem("token", token);
+      // localStorage.setItem("username", name);
 
       dispatch(setInfo(name));
 
