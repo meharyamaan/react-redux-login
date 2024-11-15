@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Loader from "../Loader";
+import BG from "../../images/BG.png";
 
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,14 +62,22 @@ const SignIn = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10">
+    <div
+      className="max-w-lg mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-28"
+      style={{
+        backgroundImage: `url(${BG})`,
+        background: "cover",
+      }}
+    >
       {loading && <Loader />}
-      <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+      <h2 className="text-2xl font-semibold text-center mb-6 text-white">
+        Sign In
+      </h2>
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4 ">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-white text-sm font-bold mb-2"
             htmlFor="Email"
           >
             Email
@@ -86,7 +95,7 @@ const SignIn = () => {
 
           <label
             htmlFor="password"
-            className="block text-gray-700 text-sm font-bold mb-2 mt-2"
+            className="block text-white text-sm font-bold mb-2 mt-2"
           >
             Password
           </label>
@@ -113,7 +122,8 @@ const SignIn = () => {
         >
           {loading ? "Signing In..." : "Sign In"}
         </button>
-        <p className="text-black flex  justify-center mt-2">
+
+        <p className="text-white flex  justify-center mt-2">
           Don't have an account?{" "}
           <Link
             to="/signup"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Loader from "../Loader";
-
+import BG from "../../images/BG.png";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
@@ -56,13 +56,21 @@ const SignUp = () => {
   return (
     <>
       {loading && <Loader />}
-      <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+      <div
+        className="max-w-lg mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10"
+        style={{
+          backgroundImage: `url(${BG})`,
+          background: "cover",
+        }}
+      >
+        <h2 className="text-2xl font-semibold text-center mb-4 text-white">
+          Sign Up
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Full Name
             </label>
@@ -80,7 +88,7 @@ const SignUp = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Email Address
             </label>
@@ -98,7 +106,7 @@ const SignUp = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Password
             </label>
@@ -116,7 +124,7 @@ const SignUp = () => {
           <div className="mb-4">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-white"
             >
               Confirm Password
             </label>
@@ -139,8 +147,8 @@ const SignUp = () => {
             {loading ? "Signing Up..." : "Sign Up"}
           </button>
 
-          <p className="text-black flex  justify-end ">
-            Already Have an Account?{" "}
+          <p className="text-white flex  justify-center pt-2 ">
+            Already have an account?
             <Link
               to="/signin"
               className="text-blue-500 hover:underline pl-2 font-semibold"

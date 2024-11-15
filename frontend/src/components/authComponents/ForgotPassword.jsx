@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Loader";
+import { hideLoader, showLoader } from "../../redux/loader/loaderSLice";
 const ForgotPassword = () => {
+  const loading = useSelector((state) => state.loader.loading);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState({
     email: "",
   });
@@ -14,9 +19,10 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    dispatch(showLoader());
     if (!email) {
       toast.error("Email Missing.");
+      dispatch(hideLoader());
       return;
     }
 
@@ -31,11 +37,14 @@ const ForgotPassword = () => {
       }, 1000);
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong.");
+    } finally {
+      dispatch(hideLoader());
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10">
+    <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-40">
+      {loading && <Loader />}
       <h2 className="text-2xl font-semibold text-center mb-6">
         Forgot Password
       </h2>
@@ -62,7 +71,7 @@ const ForgotPassword = () => {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
-          Submit
+          {loading ? "Submitting" : "Submit"}
         </button>
       </form>
       <ToastContainer position="top-right" autoClose={4000} />

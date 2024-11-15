@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { BrowserRouter } from "react-router-dom";
 
 //auth compnents
 import SignUp from "./components/authComponents/SignUp";
@@ -7,13 +6,15 @@ import VerifyOtp from "./components/authComponents/VerifyOtp";
 import SignIn from "./components/authComponents/SignIn";
 import ForgotPassword from "./components/authComponents/ForgotPassword";
 import ResetPassword from "./components/authComponents/ResetPassword";
+
 //other components
 import Home from "./components/homepage";
 import Profile from "./components/profile";
+import Loader from "./components/Loader";
 
 //Middlewares
 import ProtectedRoute from "./middlewares/ProtectedRoute";
-import Loader from "./components/Loader";
+
 function App() {
   return (
     <BrowserRouter>

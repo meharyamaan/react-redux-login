@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/auth/authSlice";
+import BG from "../images/BG.png";
+import User from "../images/user.png";
 const Profile = () => {
   const { name } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -12,12 +14,22 @@ const Profile = () => {
     navigate("/signin");
   };
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div
+      className="min-h-screen bg-gray-100 flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${BG})`,
+        background: "cover",
+      }}
+    >
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6 text-center">
         {/* Profile Initials */}
         <div className="flex items-center justify-center mb-4">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-4xl font-semibold text-gray-600">
-            {name ? name.charAt(0) : "U"}
+            <img
+              src={User}
+              alt="user-image"
+              className="w-auto h-auto rounded-full"
+            />
           </div>
         </div>
 
