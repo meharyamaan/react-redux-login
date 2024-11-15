@@ -44,26 +44,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-//   return (
-//
-//         <div className="flex items-center justify-center mb-4">
-//           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-4xl font-semibold text-gray-600">
-//             {name ? name.charAt(0) : "U"}{" "}
-//             {/* First letter of the user's name or a placeholder */}
-//             </div>
-//             </div>
-
-//             <h1 className="text-2xl font-semibold text-center text-gray-800 mb-2">
-//               Hello, {name || "Guest"}!
-//             </h1>
-
-//             <div className="text-center mt-6">
-//               <p className="text-gray-600">Wel Come To React-Redux Tutorial</p>
-//             </div>
-//
-//       );
-//     };
-
-//     export default ProfilePage;
-//      */

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -9,8 +9,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,8 +21,6 @@ const SignUp = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccessMessage("");
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
@@ -35,30 +32,20 @@ const SignUp = () => {
         "http://localhost:5001/api/auth/signup",
         formData
       );
-      setSuccessMessage(response.data.message);
+      toast.success(response.data.message);
       setTimeout(() => {
         navigate("/verifyOtp", { state: { email: formData.email } });
-      }, 1500);
+      }, 1000);
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong.");
+      toast.error(
+        err.response?.data?.message || "An error occurred during login."
+      );
     }
   };
   return (
     <>
       <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
-
-        {error && (
-          <div className="mb-4 p-4 text-red-800 bg-red-100 rounded-xl">
-            {error}
-          </div>
-        )}
-        {successMessage && (
-          <div className="mb-4 p-4 text-green-800 bg-green-100 rounded-xl">
-            {successMessage}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -148,6 +135,7 @@ const SignUp = () => {
             </Link>
           </p>
         </form>
+        <ToastContainer position="top-right" autoClose={4000} />
       </div>
     </>
   );

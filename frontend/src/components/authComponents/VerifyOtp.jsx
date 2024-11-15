@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 const VerifyOtp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const location = useLocation();
   const { email } = location.state || {};
@@ -34,11 +33,8 @@ const VerifyOtp = () => {
   const handleSubmit = async () => {
     const otpValue = otp.join("");
     if (otpValue.length < 6) {
-      setError("Please enter a complete OTP.");
+      toast.error("Please enter a complete OTP.");
     } else {
-      setError("");
-      console.log("OTP Submitted:", otpValue);
-
       try {
         const response = await axios.post(
           "http://localhost:5001/api/auth/verifyotp",
@@ -48,24 +44,18 @@ const VerifyOtp = () => {
           }
         );
 
-        setSuccessMessage(response.data.message);
         setTimeout(() => {
           navigate("/signin");
-        }, 1500);
+        }, 1000);
+        toast.success(response.data.message);
       } catch (error) {
-        setError(error.response?.data?.message || "Something went wrong.");
+        toast.error(error.response?.data?.message || "Something went wrong.");
       }
     }
   };
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      {successMessage && (
-        <div className="mb-4 p-4 text-green-800 bg-green-100 rounded-xl">
-          {successMessage}
-        </div>
-      )}
-
       {email ? (
         <p className="mb-4 p-4 text-green-800 bg-green-100 rounded-xl">
           OTP sent to {email} mail..
@@ -76,10 +66,6 @@ const VerifyOtp = () => {
         </p>
       )}
       <h2 className="text-2xl font-semibold text-center mb-6">Enter OTP</h2>
-
-      {error && (
-        <div className="mb-4 p-4 text-red-800 bg-red-100 rounded">{error}</div>
-      )}
 
       <div className="flex justify-between mb-6">
         {otp.map((value, index) => (
@@ -102,6 +88,7 @@ const VerifyOtp = () => {
       >
         Verify OTP
       </button>
+      <ToastContainer position="top-right" autoClose={4000} />
     </div>
   );
 };
