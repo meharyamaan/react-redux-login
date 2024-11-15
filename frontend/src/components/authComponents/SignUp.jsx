@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Loader from "../Loader";
+
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { hideLoader, showLoader } from "../../redux/loader/loaderSLice";
+
 const SignUp = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.loader.loading);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +28,11 @@ const SignUp = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(showLoader());
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+      toast.error("Passwords do not match.");
+      dispatch(hideLoader());
       return;
     }
 
@@ -40,10 +49,13 @@ const SignUp = () => {
       toast.error(
         err.response?.data?.message || "An error occurred during login."
       );
+    } finally {
+      dispatch(hideLoader());
     }
   };
   return (
     <>
+      {loading && <Loader />}
       <div className="max-w-md mx-auto p-6 bg-gray-100 shadow-lg rounded-lg mt-10">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSubmit}>
@@ -121,10 +133,12 @@ const SignUp = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
-            Sign Up
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
+
           <p className="text-black flex  justify-end ">
             Already Have an Account?{" "}
             <Link

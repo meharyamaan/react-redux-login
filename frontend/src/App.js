@@ -13,13 +13,14 @@ import Profile from "./components/profile";
 
 //Middlewares
 import ProtectedRoute from "./middlewares/ProtectedRoute";
+import Loader from "./components/Loader";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/*Other comps */}
         <Route path="/" element={<Home />} />
-
+        <Route path="/loader" element={<Loader />} />
         <Route
           path="/profile"
           element={
